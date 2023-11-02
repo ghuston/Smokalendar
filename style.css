@@ -1,15 +1,27 @@
-/* styles.css */
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+body, html {
+  height: 100%;
   margin: 0;
-  background-color: #f7f7f7;
+  font-family: Arial, sans-serif;
 }
 
 #calendar {
-  display: grid;
-  grid-template-columns: repeat(7, 50px);
-  grid-gap: 5px;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
 }
+
+.day {
+  display: inline-block;
+  width: calc(100% / 7);
+  text-align: center;
+  vertical-align: top;
+}
+
+.day div {
+  margin: 5px;
+  padding: 10px;
+  background-color: blue;
+  color: white;
+}
+
+/* Add more styles as needed */
