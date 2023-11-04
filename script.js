@@ -1,72 +1,88 @@
-// Get current date information
-const now = new Date();
-const currentYear = now.getFullYear();
-const currentMonth = now.getMonth();
-const todayDate = now.getDate();
+document.addEventListener('DOMContentLoaded', function() {
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+  buildCalendar(currentMonth, currentYear);
+});
 
-// Days of the week
-const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+function buildCalendar(month, year) {
+  const now = new Date();
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const numOfDays = new Date(year, month + 1, 0).getDate();
+  const firstDay = new Date(year, month, 1).getDay();
 
-// Get the first day of the month
-const firstDay = new Date(currentYear, currentMonth, 1);
+  let calendar = document.getElementById('calendar');
+  calendar.innerHTML = ''; // Clear the previous calendar
 
-// Get the last day of the month
-const lastDay = new Date(currentYear, currentMonth + 1, 0);
+  // Create table for the calendar
+  let table = document.createElement('table');
+  let tableHead = document.createElement('thead');
+  let headerRow = document.createElement('tr');
 
-// Create calendar
-function createCalendar(year, month) {
-  const calendarDiv = document.getElementById('calendar');
-  calendarDiv.innerHTML = ''; // Clear existing table
-  
-  // Create table element
-  const table = document.createElement('table');
-  table.className = 'calendar-table';
-  
-  // Create header row
-  const thead = document.createElement('thead');
-  const headerRow = document.createElement('tr');
-  weekDays.forEach(dayName => {
-    const th = document.createElement('th');
-    th.textContent = dayName;
-    headerRow.appendChild(th);
+  // Create the days of the week headers
+  daysOfWeek.forEach(day => {
+    let dayHeader = document.createElement('th');
+    dayHeader.textContent = day;
+    headerRow.appendChild(dayHeader);
   });
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
-  
-  // Create body of the calendar
-  const tbody = document.createElement('tbody');
-  let date = 1; // Start from the first day of the month
-  for (let row = 0; row < 6; row++) { // Calendar has max 6 rows
-    const tr = document.createElement('tr');
-    
-    for (let day = 0; day < 7; day++) {
-      const td = document.createElement('td');
-      if ((row === 0 && day < firstDay.getDay()) || date > lastDay.getDate()) {
-        td.classList.add('empty');
-        tr.appendChild(td);
-        continue;
+  tableHead.appendChild(headerRow);
+  table.appendChild(tableHead);
+
+  let tableBody = document.createElement('tbody');
+  let date = 1;
+  for (let i = 0; i < 6; i++) {
+    let row = document.createElement('tr');
+
+    for (let j = 0; j < 7; j++) {
+      if (i === 0 && j < firstDay) {
+        let cell = document.createElement('td');
+        row.appendChild(cell);
+      } else if (date > numOfDays) {
+        break;
+      } else {
+        let cell = document.createElement('td');
+        let cellText = document.createElement('span');
+        cellText.textContent = date;
+        if (date === now.getDate() && year === now.getFullYear() && month === now.getMonth()) {
+          cell.classList.add('current-day');
+        }
+        // Color the cell based on smoking data
+        cell.style.backgroundColor = getHeatMapColor(date);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+        date++;
       }
-      
-      td.textContent = date;
-      if (date === todayDate && month === now.getMonth() && year === now.getFullYear()) {
-        td.classList.add('today');
-      }
-      
-      tr.appendChild(td);
-      date++;
     }
-    
-    tbody.appendChild(tr);
-    
-    // Stop creating rows if we've run out of dates
-    if (date > lastDay.getDate()) {
-      break;
-    }
+
+    tableBody.appendChild(row);
   }
-  
-  table.appendChild(tbody);
-  calendarDiv.appendChild(table);
+  table.appendChild(tableBody);
+  calendar.appendChild(table);
 }
 
-// Initial call to create calendar
-createCalendar(currentYear, currentMonth);
+function getHeatMapColor(day) {
+  let savedData = localStorage.getItem('smokingData');
+  let smokingData = savedData ? JSON.parse(savedData) : {};
+  let hours = smokingData[`${day}`]; // Retrieve the hours for the specific day
+
+  // Color logic
+  if (hours === 0) {
+    return 'lightblue';
+  } else if (hours <= 6) {
+    return 'lightgreen';
+  } else if (hours <= 18) {
+    return 'orange';
+  } else {
+    return 'red';
+  }
+}
+
+function saveSmokingTime(day, hours) {
+  let smokingData = localStorage.getItem('smokingData');
+  smokingData = smokingData ? JSON.parse(smokingData) : {};
+  smokingData[day] = hours;
+  localStorage.setItem('smokingData', JSON.stringify(smokingData));
+}
+
+// Additional logic to handle user inputs, like clicking on a day to input smoking data,
+// can be added below. You can use event delegation on the table to handle this.
