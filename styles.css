@@ -8,50 +8,76 @@ body, html {
   width: 100%;
   max-width: 600px;
   margin: 20px auto;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 days for larger screens */
+  grid-gap: 5px;
 }
+
 .calendar-table {
-  width: 100%;
-  border-collapse: collapse;
+  display: none; /* Hide the table on small screens, as we'll be using divs */
 }
-.calendar-table th {
-  background-color: #f0f0f0;
+
+.calendar-table th, .calendar-table td {
   padding: 10px;
-  border: 1px solid #e0e0e0;
-}
-.calendar-table td {
-  height: 50px;
   text-align: center;
   border: 1px solid #e0e0e0;
 }
+
+.calendar-table th {
+  background-color: #f0f0f0;
+}
+
+.calendar-table td {
+  height: 50px;
+}
+
 .calendar-table td:not(.empty) {
   background-color: #fff;
   cursor: pointer;
 }
+
 .calendar-table td.empty {
   background-color: #f7f7f7;
 }
+
 .calendar-table td.today {
   background-color: #def;
 }
 
 .day {
-  display: inline-block;
-  width: calc(100% / 7);
-  text-align: center;
-  vertical-align: top;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #e0e0e0;
+  position: relative; /* For positioning the date and heatmap color */
 }
 
-.day div {
-  margin: 5px;
-  padding: 10px;
+.day div.date {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  padding: 2px 5px;
   background-color: blue;
   color: white;
-}
-
-.date {
+  font-size: calc(8px + 1vw); /* Responsive font size */
   cursor: pointer; /* If you want the dates to be clickable */
-  /* Add other styles as needed */
 }
 
+/* Small screens: fewer columns */
+@media (max-width: 600px) {
+  #calendar {
+    grid-template-columns: repeat(3, 1fr); /* 3 days for medium screens */
+  }
+  .day {
+    font-size: calc(10px + 2vw); /* Larger font size for smaller screens */
+  }
+}
 
-/* Add more styles as needed */
+/* Very small screens: stack days vertically */
+@media (max-width: 400px) {
+  #calendar {
+    grid-template-columns: repeat(1, 1fr); /* 1 day for very small screens */
+  }
+  .day {
+    font-size: calc(12px + 4vw); /* Even larger font size for very small screens */
+  }
+}
