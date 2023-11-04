@@ -9,6 +9,30 @@ body, html {
   max-width: 600px;
   margin: 20px auto;
 }
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.calendar-table th {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+}
+.calendar-table td {
+  height: 50px;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+}
+.calendar-table td:not(.empty) {
+  background-color: #fff;
+  cursor: pointer;
+}
+.calendar-table td.empty {
+  background-color: #f7f7f7;
+}
+.calendar-table td.today {
+  background-color: #def;
+}
 
 .day {
   display: inline-block;
