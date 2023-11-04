@@ -41,18 +41,30 @@ function buildCalendar(month, year) {
   }
 }
 
-function getHeatMapColor() {
-  // Placeholder for heatmap color, adjust as needed
-  let hours = Math.random() * 24; // Replace with actual hours
-  if (hours < 6) {
-    return 'red';
-  } else if (hours < 12) {
-    return 'green';
-  } else if (hours < 18) {
-    return 'orange';
-  } else {
+function getHeatMapColor(day) {
+  let savedData = localStorage.getItem('smokingData');
+  let smokingData = savedData ? JSON.parse(savedData) : {};
+  let hours = smokingData[day]; // Retrieve the hours for the specific day
+
+  // Assuming hours is in 24-hour format and a value of 0 means no smoking
+  if (hours === 0) {
     return 'blue';
+  } else if (hours <= 6) {
+    return 'red';
+  } else if (hours <= 18) {
+    return 'green';
+  } else {
+    return 'orange';
   }
 }
+
+// To save data you would have a function like:
+function saveSmokingTime(day, hours) {
+  let smokingData = localStorage.getItem('smokingData');
+  smokingData = smokingData ? JSON.parse(smokingData) : {};
+  smokingData[day] = hours;
+  localStorage.setItem('smokingData', JSON.stringify(smokingData));
+}
+
 
 // Add more JavaScript to handle user input and local storage as needed
