@@ -81,3 +81,30 @@ body, html {
     font-size: calc(12px + 4vw); /* Even larger font size for very small screens */
   }
 }
+
+@media (max-width: 768px) {
+  .day {
+    width: 14.28%; /* ensures 7 days still fit within the screen */
+  }
+
+  .calendar-table th, .calendar-table td {
+    padding: 5px; /* smaller padding */
+  }
+
+  .calendar-table td {
+    height: 40px; /* smaller cells */
+  }
+}
+
+@media (max-width: 480px) {
+  .day {
+    width: 100%; /* stack the days on top of each other */
+  }
+
+  .day div {
+    padding: 5px; /* even smaller padding */
+  }
+
+  /* You can also adjust font sizes, margins, and other properties */
+}
+
