@@ -108,3 +108,22 @@ body, html {
   /* You can also adjust font sizes, margins, and other properties */
 }
 
+/* CSS for screens smaller than 1280px */
+@media only screen and (max-width: 1279px) {
+  .day {
+    /* Adjust padding inside each day */
+    padding: 10px;
+  }
+
+  .day div {
+    /* Adjust margin around the date */
+    margin: 5px;
+    /* Adjust font size */
+    font-size: 1em;
+  }
+
+  /* Additional styles you want to change for smaller screens */
+  /* ... */
+}
+
+
