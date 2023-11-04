@@ -24,4 +24,10 @@ body, html {
   color: white;
 }
 
+.date {
+  cursor: pointer; /* If you want the dates to be clickable */
+  /* Add other styles as needed */
+}
+
+
 /* Add more styles as needed */
