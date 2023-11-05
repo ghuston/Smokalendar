@@ -5,16 +5,17 @@ body, html {
 }
 
 #calendar {
-  width: 100%;
-  max-width: 600px;
+  width: 90%;
+  max-width: 1200px; /* This is the maximum width the calendar will take */
   margin: 20px auto;
   display: grid;
   grid-template-columns: repeat(7, 1fr); /* 7 days for larger screens */
   grid-gap: 5px;
 }
 
-.calendar-table {
-  display: none; /* Hide the table on small screens, as we'll be using divs */
+.calendar-table th, .calendar-table td {
+  padding: 20px; /* This padding can be fluid as well */
+  font-size: 1em; /* Start with a default font size */
 }
 
 .calendar-table th, .calendar-table td {
@@ -62,68 +63,34 @@ body, html {
   cursor: pointer; /* If you want the dates to be clickable */
 }
 
-/* Small screens: fewer columns */
-@media (max-width: 600px) {
-  #calendar {
-    grid-template-columns: repeat(3, 1fr); /* 3 days for medium screens */
-  }
-  .day {
-    font-size: calc(10px + 2vw); /* Larger font size for smaller screens */
-  }
-}
-
-/* Very small screens: stack days vertically */
-@media (max-width: 400px) {
-  #calendar {
-    grid-template-columns: repeat(1, 1fr); /* 1 day for very small screens */
-  }
-  .day {
-    font-size: calc(12px + 4vw); /* Even larger font size for very small screens */
-  }
-}
-
-@media (max-width: 768px) {
-  .day {
-    width: 14.28%; /* ensures 7 days still fit within the screen */
-  }
-
+/* Smaller devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
   .calendar-table th, .calendar-table td {
-    padding: 5px; /* smaller padding */
-  }
-
-  .calendar-table td {
-    height: 40px; /* smaller cells */
+    padding: 10px; /* Smaller padding for small screens */
+    font-size: 0.8em; /* Smaller font size for small screens */
   }
 }
 
-@media (max-width: 480px) {
-  .day {
-    width: 100%; /* stack the days on top of each other */
+/* Medium devices (tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .calendar-table th, .calendar-table td {
+    padding: 15px; /* Slightly larger padding for medium screens */
+    font-size: 0.9em; /* Slightly larger font size for medium screens */
   }
-
-  .day div {
-    padding: 5px; /* even smaller padding */
-  }
-
-  /* You can also adjust font sizes, margins, and other properties */
 }
 
-/* CSS for screens smaller than 1280px */
-@media only screen and (max-width: 1279px) {
-  .day {
-    /* Adjust padding inside each day */
-    padding: 10px;
+/* Large devices (desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .calendar-table th, .calendar-table td {
+    padding: 20px; /* Even larger padding for large screens */
+    font-size: 1em; /* Reset to default font size for large screens */
   }
-
-  .day div {
-    /* Adjust margin around the date */
-    margin: 5px;
-    /* Adjust font size */
-    font-size: 1em;
-  }
-
-  /* Additional styles you want to change for smaller screens */
-  /* ... */
 }
 
-
+/* Extra large devices (large desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .calendar-table th, .calendar-table td {
+    padding: 25px; /* Larger padding for extra large screens */
+    font-size: 1.2em; /* Larger font size for extra large screens */
+  }
+}
